@@ -5,6 +5,8 @@ let allData = [];
 let geoJsonLayer;
 let mapFilterTimeout; 
 
+console.log("Script loaded")
+
 // Initialize Supabase
 function initializeSupabase() {
     if (!supabase) {
