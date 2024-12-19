@@ -699,5 +699,3 @@ function applyHistoricFilters() {
 
     // Populate the table with the filtered data
     populateHistoricTable(filteredHistoricData);
-}
-
