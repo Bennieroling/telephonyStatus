@@ -11,7 +11,7 @@ console.log("Script loaded")
 function initializeSupabase() {
     if (!supabase) {
        const SUPABASE_URL="https://blofihdgffvtiagexpys.supabase.co";
-       SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJsb2ZpaGRnZmZ2dGlhZ2V4cHlzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQwMTUyOTcsImV4cCI6MjA0OTU5MTI5N30.vlM4Ye_aEdqbl0k5ZjEnEi1k9GEXl9o1zmKtWw8t8i8";
+       const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJsb2ZpaGRnZmZ2dGlhZ2V4cHlzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQwMTUyOTcsImV4cCI6MjA0OTU5MTI5N30.vlM4Ye_aEdqbl0k5ZjEnEi1k9GEXl9o1zmKtWw8t8i8";
     }
 if (!SUPABASE_URL || !SUPABASE_KEY) {
     console.error("Supabase URL or Key is missing!");
