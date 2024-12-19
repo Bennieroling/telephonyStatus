@@ -8,8 +8,8 @@ let mapFilterTimeout;
 // Initialize Supabase
 function initializeSupabase() {
     if (!supabase) {
-       const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-        const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_KEY;
+       const SUPABASE_URL = import.meta.env.SUPABASE_URL;
+        const SUPABASE_KEY = import.meta.env.SUPABASE_KEY;
     }
 if (!SUPABASE_URL || !SUPABASE_KEY) {
     console.error("Supabase URL or Key is missing!");
