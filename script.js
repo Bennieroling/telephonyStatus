@@ -10,8 +10,8 @@ console.log("Script loaded")
 // Initialize Supabase
 function initializeSupabase() {
     if (!supabase) {
-       const SUPABASE_URL="https://blofihdgffvtiagexpys.supabase.co";
-       const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJsb2ZpaGRnZmZ2dGlhZ2V4cHlzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQwMTUyOTcsImV4cCI6MjA0OTU5MTI5N30.vlM4Ye_aEdqbl0k5ZjEnEi1k9GEXl9o1zmKtWw8t8i8";
+        const SUPABASE_URL = import.meta.env.SUPABASE_URL;
+        const SUPABASE_KEY = import.meta.env.SUPABASE_KEY;
     }
 if (!SUPABASE_URL || !SUPABASE_KEY) {
     console.error("Supabase URL or Key is missing!");
@@ -19,6 +19,7 @@ if (!SUPABASE_URL || !SUPABASE_KEY) {
     supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 }
 }
+console.log('Environment Variables:', import.meta.env);
 
 // Initialize the Map
 function initializeMap() {
