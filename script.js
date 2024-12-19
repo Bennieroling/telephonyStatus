@@ -6,7 +6,7 @@ let geoJsonLayer;
 let mapFilterTimeout; 
 
 console.log("Script loaded")
-
+console.log('script.js loaded')
 // Initialize Supabase
 function initializeSupabase() {
     if (!supabase) {
@@ -25,6 +25,7 @@ function initializeSupabase() {
         console.log("Supabase initialized successfully");
     }
 }
+
 
 // Initialize the Map
 function initializeMap() {
@@ -418,6 +419,59 @@ function updateHeaderArrows(sortedColumn) {
         }
     });
 }
+
+let historicSortDirection = {}; // Tracks ascending/descending for historic table
+
+function sortHistoricTable(column) {
+    // Initialize the sortDirection object for columns if it doesn't exist
+    if (!historicSortDirection[column]) historicSortDirection[column] = 1;
+
+    // Toggle sorting direction: 1 for ascending, -1 for descending
+    historicSortDirection[column] *= -1;
+
+    // Sort the global allHistoricData array
+    allHistoricData.sort((a, b) => {
+        let valueA = a[column];
+        let valueB = b[column];
+
+        // Handle date columns dynamically
+        if (column === 'StartTime' || column === 'EndTime') {
+            valueA = valueA ? new Date(valueA) : new Date(0); // Use Epoch time if null
+            valueB = valueB ? new Date(valueB) : new Date(0);
+        } else {
+            valueA = valueA?.toString().toLowerCase() || '';
+            valueB = valueB?.toString().toLowerCase() || '';
+        }
+
+        if (valueA < valueB) return -1 * historicSortDirection[column];
+        if (valueA > valueB) return 1 * historicSortDirection[column];
+        return 0;
+    });
+
+    // Re-populate the historic table with sorted data
+    populateHistoricTable(allHistoricData);
+
+    // Update header arrows dynamically for the historic table
+    updateHistoricHeaderArrows(column);
+}
+
+function updateHistoricHeaderArrows(sortedColumn) {
+    const headers = document.querySelectorAll('#historic-table th');
+    headers.forEach(header => {
+        const onclickAttr = header.getAttribute('onclick');
+        const column = onclickAttr ? onclickAttr.match(/'(\w+)'/)?.[1] : null; // Safely check for attribute
+
+        if (column) {
+            header.innerHTML = column.charAt(0).toUpperCase() + column.slice(1) +
+                (column === sortedColumn
+                    ? (historicSortDirection[column] === 1 ? ' &#x25B2;' : ' &#x25BC;')
+                    : ' &#x25B2;');
+        }
+    });
+}
+
+
+
 function toggleLegend() {
     const legendContainer = document.getElementById('legend-container');
     const toggleButton = document.getElementById('toggle-legend-btn');
@@ -709,3 +763,17 @@ function applyHistoricFilters() {
     // Populate the table with the filtered data
     populateHistoricTable(filteredHistoricData);
 }
+
+// Expose functions to global scope
+window.showListView = showListView;
+window.showMapView = showMapView;
+window.showHistoricView = showHistoricView;
+window.applyFilters = applyFilters;
+window.clearFilters = clearFilters;
+window.filterMapByCountry = filterMapByCountry;
+window.clearMapFilter = clearMapFilter;
+window.applyHistoricFilters = applyHistoricFilters;
+window.clearHistoricFilters = clearHistoricFilters;
+window.toggleLegend = toggleLegend;
+window.sortTable = sortTable;
+window.sortHistoricTable = sortHistoricTable;
