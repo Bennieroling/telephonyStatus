@@ -12,6 +12,8 @@ function initializeSupabase() {
         const SUPABASE_KEY = process.env.SUPABASE_KEY;
         supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     }
+    connsole.log('Supabase URL:', SUPABASE_URL);
+    console.log('Supabase Key:', SUPABASE_KEY);
 }
 
 // Initialize the Map
