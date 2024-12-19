@@ -10,7 +10,7 @@ console.log("Script loaded")
 // Initialize Supabase
 function initializeSupabase() {
     if (!supabase) {
-        const SUPABASE_URL = import.meta.env.SUPABASE_URL;
+        const SUPABASE_URL = import.meta.env.SUPABASE_URL || 'fallback';
         const SUPABASE_KEY = import.meta.env.SUPABASE_KEY;
     }
 if (!SUPABASE_URL || !SUPABASE_KEY) {
