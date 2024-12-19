@@ -10,16 +10,21 @@ console.log("Script loaded")
 // Initialize Supabase
 function initializeSupabase() {
     if (!supabase) {
-        const SUPABASE_URL = import.meta.env.SUPABASE_URL || 'fallback';
-        const SUPABASE_KEY = import.meta.env.SUPABASE_KEY;
+        // Declare variables in the function scope
+        const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'fallback';
+        const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_KEY || 'fallback';
+
+        // Check if required environment variables are missing
+        if (!SUPABASE_URL || SUPABASE_URL === 'fallback' || !SUPABASE_KEY || SUPABASE_KEY === 'fallback') {
+            console.error("Supabase URL or Key is missing!");
+            return; // Stop execution if variables are missing
+        }
+
+        // Initialize Supabase client
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        console.log("Supabase initialized successfully");
     }
-if (!SUPABASE_URL || !SUPABASE_KEY) {
-    console.error("Supabase URL or Key is missing!");
-} else {
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 }
-}
-console.log('Environment Variables:', import.meta.env);
 
 // Initialize the Map
 function initializeMap() {
