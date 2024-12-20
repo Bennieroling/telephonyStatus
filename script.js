@@ -780,3 +780,6 @@ window.clearHistoricFilters = clearHistoricFilters;
 window.toggleLegend = toggleLegend;
 window.sortTable = sortTable;
 window.sortHistoricTable = sortHistoricTable;
+window.toggleButton = toggleButton;
+window.refreshStatuses = refreshStatuses;
+window.toggleDarkMode = toggleDarkMode;
