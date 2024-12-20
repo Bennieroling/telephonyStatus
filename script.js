@@ -423,20 +423,23 @@ function updateHeaderArrows(sortedColumn) {
 let historicSortDirection = {}; // Tracks ascending/descending for historic table
 
 function sortHistoricTable(column) {
-    // Initialize the sortDirection object for columns if it doesn't exist
+    // Initialize the historicSortDirection object for columns if it doesn't exist
     if (!historicSortDirection[column]) historicSortDirection[column] = 1;
 
     // Toggle sorting direction: 1 for ascending, -1 for descending
     historicSortDirection[column] *= -1;
 
-    // Sort the global allHistoricData array
+    // Log sorting column and direction for debugging
+    console.log(`Sorting by column: ${column}, Direction: ${historicSortDirection[column]}`);
+
+    // Sort the `allHistoricData` array
     allHistoricData.sort((a, b) => {
         let valueA = a[column];
         let valueB = b[column];
 
-        // Handle date columns dynamically
-        if (column === 'StartTime' || column === 'EndTime') {
-            valueA = valueA ? new Date(valueA) : new Date(0); // Use Epoch time if null
+        // Special handling for date/time columns
+        if (column === 'status_start' || column === 'status_end') {
+            valueA = valueA ? new Date(valueA) : new Date(0); // Use Epoch for null/undefined
             valueB = valueB ? new Date(valueB) : new Date(0);
         } else {
             valueA = valueA?.toString().toLowerCase() || '';
@@ -448,19 +451,19 @@ function sortHistoricTable(column) {
         return 0;
     });
 
-    // Re-populate the historic table with sorted data
+    // Re-populate the table with sorted data
     populateHistoricTable(allHistoricData);
 
-    // Update header arrows dynamically for the historic table
+    // Update header arrows dynamically
     updateHistoricHeaderArrows(column);
 }
+
+
 
 function updateHistoricHeaderArrows(sortedColumn) {
     const headers = document.querySelectorAll('#historic-table th');
     headers.forEach(header => {
-        const onclickAttr = header.getAttribute('onclick');
-        const column = onclickAttr ? onclickAttr.match(/'(\w+)'/)?.[1] : null; // Safely check for attribute
-
+        const column = header.getAttribute('onclick')?.match(/sortHistoricTable\('(\w+)'\)/)?.[1];
         if (column) {
             header.innerHTML = column.charAt(0).toUpperCase() + column.slice(1) +
                 (column === sortedColumn
@@ -469,6 +472,7 @@ function updateHistoricHeaderArrows(sortedColumn) {
         }
     });
 }
+
 
 
 
