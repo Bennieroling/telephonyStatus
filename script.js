@@ -55,7 +55,7 @@ async function populateMap(data) {
 
         if (geoJsonLayer) map.removeLayer(geoJsonLayer);
 
-        const response = await fetch('countries.geo.json');
+        const response = await fetch('/countries.geo.json');
         if (!response.ok) throw new Error("Failed to load GeoJSON file.");
 
         const geoJsonData = await response.json();
