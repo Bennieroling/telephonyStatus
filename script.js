@@ -4,6 +4,7 @@ let map;
 let allData = [];
 let geoJsonLayer;
 let mapFilterTimeout; 
+import countriesGeoJson from './countries.geo.json';
 
 console.log("Script loaded")
 console.log('script.js loaded')
@@ -55,10 +56,8 @@ async function populateMap(data) {
 
         if (geoJsonLayer) map.removeLayer(geoJsonLayer);
 
-        const response = await fetch('/countries.geo.json');
-        if (!response.ok) throw new Error("Failed to load GeoJSON file.");
-
-        const geoJsonData = await response.json();
+        // Use imported GeoJSON data directly
+        const geoJsonData = countriesGeoJson;
 
         geoJsonLayer = L.geoJson(geoJsonData, {
             style: feature => {
